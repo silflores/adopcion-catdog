@@ -1,0 +1,75 @@
+<%- include('../layouts/cabecera.ejs') %>
+<style>
+    body {
+        background-image: url('/images/fondo4.jpg');
+        background-size: cover;
+        background-repeat: no-repeat;
+        background-attachment: fixed;
+        background-position: center;
+        color: white;
+    }
+</style>
+
+<style>
+    .card-img-container {
+        overflow: hidden;
+        height: 300px; /* Ajusta el tamaño de la imagen según tus necesidades */
+    }
+
+    .card-img-top {
+        width: 100%;
+        height: auto;
+        object-fit: cover;
+    }
+    .container {
+        text-align: center;
+        background-color: rgba(0, 0, 0, 0.5);
+        padding: 20px;
+        border-radius: 10px;
+    }
+
+    
+</style>
+
+<br/>
+<br/>
+<a href="/animales/ingresar" class="btn btn-primary" type="button">Ingresar una mascota</a>
+<br/>
+<br/>
+
+<div class="row">
+    <% for (let animal of animales) { %>
+        <div class="col-md-4 mb-4">
+            <div class="card">
+                <div class="card-img-container">
+                    <img class="card-img-top" src="/images/<%= animal.foto %>" alt="<%= animal.nombre %>">
+                </div>
+                <div class="card-body">
+                    <h5 class="card-title"><%= animal.nombre %></h5>
+                    <p class="card-text">
+                        <strong>ID:</strong> <%= animal.id %><br>
+                        <strong>Tipo:</strong> <%= animal.tipo %><br>
+                        <strong>Sexo:</strong> <%= animal.sexo %><br>
+                        <strong>Edad:</strong> <%= animal.edad %><br>
+                        <!-- No mostrar el correo electrónico -->
+                    </p>
+                    <!-- Formulario para adoptar -->
+                    <form method="post" action="/animales/adoptar">
+                        <div class="form-group">
+                            <label for="email_<%= animal.id %>">Ingresar correo para adoptar:</label>
+                            <input type="email" class="form-control" id="email_<%= animal.id %>" name="email" placeholder="Correo electrónico" required>
+                        </div>
+                        <br>
+                        <input type="hidden" name="animal_id" value="<%= animal.id %>">
+                        <button type="submit" class="btn btn-success btn-block">Adoptar</button>
+                    </form>
+                    <!-- Fin formulario para adoptar -->
+                </div>
+            </div>
+        </div>
+    <% } %>
+</div>
+
+<%- include('../layouts/pie.ejs') %>
+
+
